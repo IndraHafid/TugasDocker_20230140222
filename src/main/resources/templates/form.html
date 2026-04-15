@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Data Mahasiswa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h2 {
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 5px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .radio-option input[type="radio"] {
+            margin: 0;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .user-info {
+            text-align: right;
+            margin-bottom: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="user-info">
+            Selamat datang, <span th:text="${username}">admin</span> (<span th:text="${nim}">20210140019</span>)
+        </div>
+        
+        <div class="header">
+            <h2>Form Input Mahasiswa</h2>
+        </div>
+        
+        <div class="success-message" th:if="${success}" th:text="${success}">
+            Data mahasiswa berhasil disimpan!
+        </div>
+        
+        <div class="error-message" th:if="${error}" th:text="${error}">
+            Harap isi semua field dengan benar!
+        </div>
+        
+        <form th:action="@{/save}" method="post" th:object="${student}">
+            <div class="form-group">
+                <label for="nama">Nama</label>
+                <input type="text" id="nama" th:field="*{nama}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nim">NIM</label>
+                <input type="text" id="nim" th:field="*{nim}" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Jenis Kelamin</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="laki" th:field="*{jenisKelamin}" value="Laki-laki" required>
+                        <label for="laki">Laki-laki</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="perempuan" th:field="*{jenisKelamin}" value="Perempuan" required>
+                        <label for="perempuan">Perempuan</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </form>
+        
+        <div class="back-link">
+            <a th:href="@{/home}">Kembali ke Home</a>
+        </div>
+    </div>
+</body>
+</html>
